@@ -1,0 +1,189 @@
+﻿@model PolandDelivery.Models.ViewModels.NewsResponse
+@{
+    ViewData["Title"] = "Новини Delivery International Poland";
+    int currentYear = DateTime.Now.Year;
+    int hasMonth = Model.month == null ? 0 : 1;
+    int hasYear = Model.year == null ? 0 : 1;
+}
+
+<style type="text/css">
+
+    .btn_style {
+        font-size: 25px;
+        width: 30px;
+        height: 35px;
+        text-align: center;
+        cursor: pointer;
+        margin-right: 7px;
+        padding: 2px;
+    }
+
+    .btn_active {
+        background-color: #2F6088;
+        color: #f5f5f5;
+    }
+
+</style>
+
+<div>
+    <div class="crumbs crumbs--no-heading">
+        <div class="c-container">
+            <div class="crumbs__inner">
+                <a href="index.html">Головна</a> / <span>Новини компанії</span>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="c-container c-container--news">
+            <div class="news__inner">
+                <h2 class="section-title">Новини про компанію Delivery International Poland</h2>
+
+                <div class="news-search">
+                    <select class="news-search__select" name="month" id="month" onchange="ChangeParameters(1, true)">
+                        <option value="-1" style="display: none;">Місяць</option>
+                        <option value="1">Січень</option>
+                        <option value="2">Лютий</option>
+                        <option value="3">Березень</option>
+                        <option value="4">Квітень</option>
+                        <option value="5">Травень</option>
+                        <option value="6">Червень</option>
+                        <option value="7">Липень</option>
+                        <option value="8">Серпень</option>
+                        <option value="9">Вересень</option>
+                        <option value="10">Жовтень</option>
+                        <option value="11">Листопад</option>
+                        <option value="12">Грудень</option>
+                    </select>
+                    <select class="news-search__select" name="year" id="year" onchange="ChangeParameters(1, true)">
+                        <option value="-1" style="display: none;">Рік</option>
+                        @for (int i = 2021; i <= currentYear; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                    <input class="news-search__input" type="text" name="search" id="search" value="@Model.search" placeholder="Ключове слово">
+                </div>
+
+                <ul class="news">
+                    <!-- next news item -->
+                    @foreach (var iter in Model.news)
+                    {
+                        <li>
+                            <details class="news__details">
+                                <summary>
+                                    <!-- Если в новости нету баннера - то рядом с class="news-heading" нужно добавить id="hide-if-no-banner" -->
+                                    <div class="news-heading" id="@(string.IsNullOrEmpty(iter.Image) ? "hide-if-no-banner" : "1")">
+                                        <div class="news-heading__short-info">
+                                            <time class="short-info__time">@iter.CreatedDate.ToString("dd.MM.yyyy")</time>
+                                            <h4 class="short-info__title">@iter.Title</h4>
+                                            <div onclick="print_doc()" class="print-btn">
+                                                <img src="img/system/icon/print-icon.svg" alt="icon">
+                                                <p>Друкувати новину</p>
+                                            </div>
+
+                                            <div class="hide-news-btn">
+                                                <img src="img/system/icon/arrow-black.svg" alt="icon-arrow">
+                                                <p>Сховати новину</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="news-heading__short-news">
+                                            <p class="short-news__desc">
+                                                @iter.ContentShort
+                                            </p>
+
+                                            <div class="news-banner">
+                                                <img src="@iter.Image" alt="banner">
+                                            </div>
+
+                                            <div class="know-more-btn">
+                                                <img src="img/system/icon/arrow-black.svg" alt="icon-arrow">
+                                                <p>Дізнатися більше</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </summary>
+
+                                <div class="opened-news">
+                                    @iter.ContentHtml
+
+                                </div>
+                            </details>
+                        </li>
+                    }
+                </ul>
+
+                <div class="news-pagination">
+                    <!-- Пагинацию сюда можно -->
+                    <div style="display: flex; margin-top: 20px">
+                        <a class="btn_style" onclick="ChangeParameters(@(Model.page - 1), false)"><</a>
+                        @for (int i = Model.buttonsLimit["pageFrom"]; i <= Model.buttonsLimit["pageTo"]; i++)
+                        {
+                            <a class="btn_style @(i == Model.page ? "btn_active" : "")" onclick="ChangeParameters(@i, false)">@i</a>
+                        }
+                        <a class="btn_style" onclick="ChangeParameters(@(Model.page + 1), false)">></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type="text/javascript">
+
+    var searchFocus = false;
+    init();
+
+    $("#search").focus(function () {
+        searchFocus = true;
+    });
+
+    $(document).on('keypress', function (e) {
+        if (e.which == 13 && searchFocus) {
+            var search = $("#search").val();
+            if (search != "" && search != null && search != undefined)
+                ChangeParameters(1, true);
+        }
+    });
+
+    $('.news-search__input').mousedown(function (e) {
+        if (e.which == 1 && searchFocus) {
+            var search = $("#search").val();
+            if (search != "" && search != null && search != undefined)
+                ChangeParameters(1, true);
+        }
+    });
+
+    function init() {
+        if (@hasMonth == 1) {
+            $('#month option[value=@Model.month]').attr('selected', 'selected');
+        }
+        if (@hasYear == 1) {
+            $('#year option[value=@Model.year]').attr('selected', 'selected');
+        }
+
+    }
+
+    function ChangeParameters(page, anywayReload) {
+        debugger;
+        if (!anywayReload && (page == @Model.page || page == 0 || page == @(Model.totalPages + 1)))
+            return;
+
+        searchFocus = false;
+        var month = $("#month option:selected").val();
+        var year = $("#year option:selected").val();
+        var search = $("#search").val();
+
+        var link = '@Url.Action("Index", "News")' + '?';
+        link = link + 'page=' + page;
+        if (month != -1)
+            link = link + '&month=' + month;
+        if (year != -1)
+            link = link + '&year=' + year;
+        if (search != "" && search != null && search != undefined)
+            link = link + '&search=' + search;
+        window.location = link;
+    }
+
+</script>

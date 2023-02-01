@@ -1,0 +1,32 @@
+﻿@model PolandDelivery.Models.ViewModels.LoginRequest
+@{
+    ViewData["Title"] = "Увійти";
+}
+
+<link href="../../css/account.css" rel="stylesheet" type="text/css" />
+
+<h2>Авторизуватися</h2>
+<form method="post" asp-controller="Account" asp-action="Login"
+      asp-route-returnUrl="@Model.returnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="userName"></label><br />
+        <input asp-for="userName" />
+        <span asp-validation-for="userName"></span>
+    </div>
+    <div>
+        <label asp-for="password"></label><br />
+        <input asp-for="password" />
+        <span asp-validation-for="password"></span>
+    </div>
+    <div>
+        <label asp-for="rememberMe"></label><br />
+        <input asp-for="rememberMe" style="-webkit-appearance: auto; width: auto;" />
+    </div>
+    <div>
+        <input type="submit" class="main-btn" value="Увійти" />
+    </div>
+    <div>
+        <a asp-action="Registration" asp-controller="Account" class="registration-link">Зареєструватися</a>
+    </div>
+</form>

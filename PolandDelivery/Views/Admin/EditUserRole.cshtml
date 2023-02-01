@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model PolandDelivery.Models.ViewModels.ChangeRoleResponse
+@{
+    ViewData["Title"] = "Права доступу";
+    int i = 0;
+}
+
+<link href="../../css/admin.css" rel="stylesheet" type="text/css" />
+
+<div class="c-container">
+    <h2>Права доступу користувача @Model.userName</h2>
+
+    <form asp-action="EditUserRole" method="post">
+        <input type="hidden" name="userId" value="@Model.userId" />
+        <div class="form-group">
+            @foreach (IdentityRole role in Model.allRoles)
+            {
+                <div class="just_flex">
+                    <div class="role-label">
+                        <label for="@i">@role.Name</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="roles" style="-webkit-appearance: auto; width: auto;" id="@i" value="@role.Name" @(Model.userRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />
+                    </div>
+                </div>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Зберегти</button>
+    </form>
+
+    <div class="to-main">
+        <a asp-action="Users" asp-controller="Admin">До списку користувачів</a>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿<div class="c-container">
+    <nav class="header__inner">
+        <a class="header__logo" asp-action="Index" asp-controller="Home">
+            <img src="../../img/system/logos/DI-logo.png" alt="logo">
+        </a>
+
+        @await Component.InvokeAsync("HeaderMenu")
+        
+        <div style="color: white;">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    @User.Identity.Name
+                </div>
+                <div>
+                    <form method="post" asp-controller="Account" asp-action="Logout">
+                        <input type="submit" style="text-decoration: underline; color: white; cursor: pointer; font-size: 16px;" value="Вийти" />
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <a asp-action="Login" asp-controller="Account">Увійти</a>
+                </div>
+            }
+        </div>
+        
+        <div class="nav-menu__group">
+            <div class="nav-hot-line">
+                <a href="tel:+380675366070" class="nav-hot-line__number">
+                    <img src="../../img/system/icon/phone-call-icon.svg" alt="icon">
+                    <p>+38(067)536-60-70</p>
+                </a>
+                <p class="nav-hot-line__schedule">ПН-ПТ 08:00-18:00</p>
+                <p class="nav-hot-line__schedule">СБ 09:00-15:00</p>
+            </div>
+
+            <div class="mob-menu-btn"></div>
+        </div>
+    </nav>
+
+    <script>
+        // При открытии меню ЛК -- закрывать Моб.меню
+        $(".mob-menu-btn").on('click', function (e) {
+            $(".mob-menu-btn").toggleClass("mob-menu-btn--opened");
+            $(".nav-menu").toggleClass("nav-menu--active");
+            $("#body").toggleClass("no-scroll");
+        })
+    </script>
+</div>
+
+

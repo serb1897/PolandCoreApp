@@ -1,0 +1,29 @@
+﻿@model PolandDelivery.Models.ViewModels.RegistrationRequest
+@{ 
+    ViewData["Title"] = "Реєстрація";
+}
+
+<link href="../../css/account.css" rel="stylesheet" type="text/css" />
+
+<h2>Реєстрація нового користувача</h2>
+<form method="POST" asp-controller="Account" asp-action="Registration">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="userName"></label><br />
+        <input asp-for="userName" />
+        <span asp-validation-for="userName"></span>
+    </div>
+    <div>
+        <label asp-for="password"></label><br />
+        <input asp-for="password" />
+        <span asp-validation-for="password"></span>
+    </div>
+    <div>
+        <label asp-for="passwordConfirm"></label><br />
+        <input asp-for="passwordConfirm" />
+        <span asp-validation-for="passwordConfirm"></span>
+    </div>
+    <div>
+        <input type="submit" class="main-btn" value="Реєстрація" />
+    </div>
+</form>

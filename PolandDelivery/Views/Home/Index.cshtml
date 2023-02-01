@@ -1,0 +1,98 @@
+﻿@model PolandDelivery.Models.ViewModels.HomePageModel
+@{
+    ViewData["Title"] = "Delivery International Poland";
+    int i = 0;
+}
+
+<div>
+
+    <!-- Блок Слайдер Баннеров -->
+    <section>
+        <!-- desctop -->
+        <div class="main-slider" id="main-slider--desctop">
+            @foreach (var banner in Model.banners)
+            {
+                i++;
+                <div class="main-slider__link" href="in-dev.html">
+                    <img class="main-slider__img for-desc" src="@banner.HeadImage" alt="banner">
+                    <img class="main-slider__img for-mob" src="@banner.HeadImageMobile" alt="banner">
+                    <div class="main-slider__info">
+                        <a class="main-slider__info-link" href="@banner.Url" target="_blank">
+                            <h2 class="main-slider__title">@banner.Title</h2>
+                            <p class="main-slider__desc">@banner.Description</p>
+                        </a>
+
+                        <div class="main-slider__nav">
+                            <button class="main-slider__arrow-prev"></button>
+                            <div class="indicator">
+                                <span class="indicator__active">@($"0{i}")</span>
+                                <span class="indicator__all">/@($"0{Model.banners.Count()}")</span>
+                            </div>
+                            <button class="main-slider__arrow-next"></button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+    
+    <section id="included__about-company-block">
+        @await Html.PartialAsync("AboutCompany")
+    </section>
+
+    <section id="included__services-company-block" class="section--white">
+        @*await Html.PartialAsync("ServicesCompany")*@
+        @await Component.InvokeAsync("ServicesCompany")
+    </section>
+
+    <section id="included__contact-block">
+        @await Html.PartialAsync("Contact")
+    </section>
+
+    <section class="section--white">
+        <div class="c-container">
+            <div class="news-block">
+                <h2 class="section-title">Новини компанії</h2>
+
+                <ul class="news-block__ul">
+                    @foreach (var iter in Model.news)
+                    {
+                        <li class="news-block__item">
+                            <a href="@Url.Action("Index", "News")" class="news-block__link">
+                                <div class="news-block__banner">
+                                    <img src="@iter.Image" alt="news banner">
+                                </div>
+
+                                <div class="news-block__info">
+                                    <div class="news-block__info-inner">
+                                        <time class="news-block__time">@(iter.CreatedDate.ToString("dd.MM.yyyy"))</time>
+                                        <h4 class="news-block__title">@iter.Title</h4>
+                                        <p class="news-block__desc">
+                                            @iter.ContentShort
+                                        </p>
+                                        <div class="news-block__btn">
+                                            <div class="news-block__svg">
+                                                <svg width="31" height="8" viewBox="0 0 31 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M30.3536 4.35355C30.5488 4.15829 30.5488 3.84171 30.3536 3.64645L27.1716 0.464466C26.9763 0.269204 26.6597 0.269204 26.4645 0.464466C26.2692 0.659728 26.2692 0.976311 26.4645 1.17157L29.2929 4L26.4645 6.82843C26.2692 7.02369 26.2692 7.34027 26.4645 7.53553C26.6597 7.7308 26.9763 7.7308 27.1716 7.53553L30.3536 4.35355ZM0 4.5H30V3.5H0V4.5Z" fill="white" />
+                                                </svg>
+                                            </div>
+                                            <p class="news-block__btn-text">Дізнатися більше</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+                <a class="all-news-btn" href="@Url.Action("Index", "News")">
+                    <svg width="31" height="8" viewBox="0 0 31 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30.3536 4.35355C30.5488 4.15829 30.5488 3.84171 30.3536 3.64645L27.1716 0.464466C26.9763 0.269204 26.6597 0.269204 26.4645 0.464466C26.2692 0.659728 26.2692 0.976311 26.4645 1.17157L29.2929 4L26.4645 6.82843C26.2692 7.02369 26.2692 7.34027 26.4645 7.53553C26.6597 7.7308 26.9763 7.7308 27.1716 7.53553L30.3536 4.35355ZM0 4.5H30V3.5H0V4.5Z" fill="#3A566C" />
+                    </svg>
+
+                    <p class="all-news-btn__text">Всі новини компанії</p>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

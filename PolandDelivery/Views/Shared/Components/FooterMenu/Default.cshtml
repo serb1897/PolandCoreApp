@@ -1,0 +1,17 @@
+﻿@model List<PolandDelivery.Models.DBModels.Menu>
+
+@{
+    int parentId = Model.Where(w => w.ParentId != null).OrderBy(o => o.ParentId).Select(s => s.ParentId ?? 0).FirstOrDefault();
+    string parentName = Model.Where(w => w.Id == parentId).Select(s => s.Name).FirstOrDefault();
+    List<PolandDelivery.Models.DBModels.Menu> child = Model.Where(w => w.ParentId == parentId).OrderBy(o => o.ParentId).ToList();
+}
+
+<div class="footer-nav__item">
+    <h4 class="footer-nav__title" id="drop-down">@parentName</h4>
+    <ul class="footer-nav__drop-down">
+        @foreach (var iter in child)
+        {
+            <li class="footer-nav__link"><a href="@iter.Url">@iter.Name</a></li>
+        }
+    </ul>
+</div>

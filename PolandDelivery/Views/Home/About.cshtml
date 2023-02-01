@@ -1,0 +1,34 @@
+﻿@model PolandDelivery.Models.ViewModels.GenericPagesResponse
+@{
+    ViewData["Title"] = Model.title;
+}
+
+<div>
+    <section class="page-header page-header--about-company">
+        <div class="page-header__inner">
+            <h1 class="page-header__title">@Model.title</h1>
+        </div>
+    </section>
+
+    <div class="crumbs">
+        <div class="c-container">
+            <div class="crumbs__inner">
+                <a asp-action="Index" asp-controller="Home">Головна</a> / <span>@Model.title</span>
+            </div>
+        </div>
+    </div>
+
+    <section id="included__about-company-block">
+        @await Html.PartialAsync("AboutCompany")
+    </section>
+
+    @Model.content
+
+    <section id="included__services-company-block" class="section--white">
+        @await Component.InvokeAsync("ServicesCompany")
+    </section>
+
+    <section id="included__contact-block">
+        @await Html.PartialAsync("Contact")
+    </section>
+</div>

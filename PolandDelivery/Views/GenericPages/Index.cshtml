@@ -1,0 +1,32 @@
+﻿@model PolandDelivery.Models.ViewModels.GenericPagesResponse
+@{
+    ViewData["Title"] = Model.title;
+}
+
+<style>
+    .page-header--background-image {
+        background: url('@Model.headImg') no-repeat center center;
+    }
+</style>
+
+<div>
+    <section class="page-header page-header--background-image">
+        <div class="page-header__inner">
+            <h1 class="page-header__title">@Model.title</h1>
+        </div>
+    </section>
+
+    <div class="crumbs">
+        <div class="c-container">
+            <div class="crumbs__inner">
+                <a asp-action="Index" asp-controller="Home">Головна</a> / @Model.submenu / <span>@Model.title</span>
+            </div>
+        </div>
+    </div>
+
+    @Model.content
+
+    <section id="included__contact-block">
+        @await Html.PartialAsync("Contact")
+    </section>
+</div>

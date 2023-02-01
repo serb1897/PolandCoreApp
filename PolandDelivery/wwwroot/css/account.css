@@ -1,0 +1,30 @@
+﻿h2 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+form {
+    width: 30%;
+    margin: 20px auto;
+}
+
+form > div > input {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: 700;
+}
+
+.validation-summary-errors,
+span {
+    color: red;
+}
+
+/*.validation-summary-errors {
+    margin-left: 35%;
+}*/
+
+.to-main {
+    margin-top: 40px;
+}

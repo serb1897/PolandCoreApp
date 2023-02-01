@@ -1,0 +1,31 @@
+﻿@{ 
+    ViewData["Title"] = "Панель адміністратора";
+}
+
+<link href="../../css/admin.css" rel="stylesheet" type="text/css" />
+
+<div class="c-container">
+    <div class="menu-point">
+        <div>Користувачі</div>
+        <ul>
+            <li>
+                <a asp-action="Users" asp-controller="Admin">Список користувачів</a>
+            </li>
+            <li>
+                <a asp-action="CreateUser" asp-controller="Admin">Створити користувача</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu-point">
+        <div  class="menu-point-title">Ролі</div>
+        <ul>
+            <li>
+                <a asp-action="Roles" asp-controller="Admin">Список ролей</a>
+            </li>
+            <li>
+                <a asp-action="CreateRole" asp-controller="Admin">Створити роль</a>
+            </li>
+        </ul>
+        
+    </div>
+</div>

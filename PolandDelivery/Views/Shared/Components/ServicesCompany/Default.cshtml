@@ -1,0 +1,30 @@
+﻿@model List<PolandDelivery.Models.ViewModels.ServicesCompanyVCRequest>
+
+<div class="c-container">
+    <div class="services-block">
+        <div class="services-block__info">
+            <h2 class="section-title">Послуги компанії</h2>
+            <p>Запрошуємо вас скористатись нашими послугами. Впевнені, що ми зможемо вирішити будь яке ваше питання у логістичній сфері</p>
+        </div>
+
+        <ul class="services-block__ul">
+            @foreach (var iter in Model)
+            {
+                <li class="services-block__item">
+                    <a href="@iter.url" target="_blank" class="services-block__link">
+                        <div class="services-block__icon">
+                            <img class="white-icon" src="@iter.whiteIconUrl" alt="icon">
+                            <img class="black-icon" src="@iter.blackIconUrl" alt="icon">
+                        </div>
+                        <p class="services-block__text">@iter.name</p>
+                        <div class="services-block__open-icon">
+                            <img class="white-icon" src="../img/system/icon/arrow-white.svg" alt="open-icon">
+                            <img class="black-icon" src="../img/system/icon/arrow-black.svg" alt="open-icon">
+                        </div>
+                    </a>
+                </li>
+            }
+        </ul>
+
+    </div>
+</div>

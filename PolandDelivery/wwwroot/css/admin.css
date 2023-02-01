@@ -1,0 +1,75 @@
+﻿h2 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.menu-point > div {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+
+.menu-point > ul {
+    margin-left: 20px;
+}
+
+.menu-point > ul > li {
+    margin-bottom: 5px;
+}
+
+form > div {
+    margin-top: 20px;
+}
+
+.just_flex {
+    display: flex;
+}
+
+.registration-link {
+    text-decoration: underline;
+    color: blue;
+}
+
+.login-name {
+    font-size: 20px;
+}
+
+.close-btn {
+    color: red;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+}
+
+.table-row {
+    border-bottom: 1px solid #333;
+    width: 50%;
+    margin: auto;
+    padding: 15px 0px;
+}
+
+.user-name-column {
+    width: 50%;
+    padding-left: 3%;
+}
+
+.access-column {
+    width: 45%;
+}
+
+.delete-btn {
+}
+
+.table-stl {
+    margin-top: 40px;
+}
+
+.to-main {
+    margin-top: 40px;
+}
+
+.role-label {
+    font-size: 20px;
+    width: 10%;
+}

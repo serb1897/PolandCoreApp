@@ -1,0 +1,116 @@
+﻿<div class="c-container">
+    <div class="footer__inner">
+        <div class="footer-main">
+            <div class="hot-line">
+                <a class="hot-line__number" href="tel:380675578874">
+                    <img src="../../img/system/icon/phone-call-icon.svg" alt="icon">
+                    +38(067)557-88-74
+                </a>
+
+                <a class="hot-line__number" href="tel:48735633869">
+                    <img src="../../img/system/icon/phone-call-icon.svg" alt="icon">
+                    +48(735)63-38-69
+                </a>
+
+                <p class="hot-line__schedule">ПН-ПТ 08:00-18:00 СБ 09:00-15:00</p>
+            </div>
+
+            @await Component.InvokeAsync("FooterMenu")
+
+            <div class="footer-nav">
+                <div class="footer-mav__group-link">
+                    <a class="footer-nav__title" asp-action="About" asp-controller="Home">Про компанію</a>
+                    <a class="footer-nav__title" asp-action="Index" asp-controller="News">Новини</a>
+                </div>
+
+                <div class="subscription">
+                    <h5 class="subscription__title">Підпишіться на E-mail розсилку компанії, щоб бути в курсі новин</h5>
+                    <div class="subscription__form">
+                        <input class="subscription__input" type="text" id="email-mailing" name="email-mailing" placeholder="E-mail">
+                        <button class="main-btn popup-default_open" onclick="SendMailingRequest()">Підписатись</button>
+                    </div>
+                </div>
+
+                <div>
+                    <a class="footer-nav__link footer-nav__link--small" asp-action="Download" asp-controller="FileManager" asp-route-filename="Regulations.docx" target="_blank">Нормативно-правові акти</a>
+                    <a class="footer-nav__link footer-nav__link--small" asp-action="Download" asp-controller="FileManager" asp-route-filename="PrivacyPolicy.txt" target="_blank">Політика конфіденційності</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-sub">
+            <a asp-action="Index" asp-controller="Home" class="footer-sub__logo">
+                <img src="../../img/system/logos/DI-logo--grey.png" alt="logo">
+            </a>
+
+            <div class="contacts-company contacts-company--poland">
+                <p>DELIVERY INTERNATIONAL POLAND sp. z o.o.</p>
+                <p>
+                    <a href="https://goo.gl/maps/y3M1hGgR4j6Rs1Kz9" target="_blank">
+                        pl. Jana Kilińskiego nr 2, <br>
+                        Rzeszów, 35-005
+                    </a>
+                </p>
+                <p>NIP: 5170406933 REGON: 386199471</p>
+                <p><a href="mailto:office@deliveryip.pl">E-mail:office@deliveryip.pl</a></p>
+            </div>
+
+            <div class="contacts-company">
+                <p>Група компаній «Делівері» © 2001-2021</p>
+                <p>
+                    <a href="https://goo.gl/maps/UxNcJ1RvpGVH7Ubk9" target="_blank">
+                        Україна 01024, м. Київ, <br>
+                        вул. Велика Васильківська 15/2
+                    </a>
+                </p>
+                <p><a href="mailto:office@delivery-auto.com.ua">E-mail:office@delivery-auto.com.ua</a></p>
+            </div>
+
+            <div class="payments">
+                <div class="payments__item">
+                    <img src="../../img/system/logos/footer__visa.png" alt="visa">
+                </div>
+
+                <div class="payments__item">
+                    <img src="../../img/system/logos/footer__mastercard.png" alt="mastercard">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#drop-down').on('click', function (event) {
+            $('.footer-nav__drop-down').toggleClass('drop-down__active');
+            $('#drop-down').toggleClass('drop-down__active-icon');
+        });
+
+        function SendMailingRequest() {
+            var _email = $("#email-mailing").val();
+
+            var data = {
+                email: _email
+            };
+
+            var url = '@Url.Action("SendMailingRequest", "UserForms")';
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.state == true) {
+                        show_message("Ваша заявка успішно відправлена!", "Ви підписані на нашу розсилку.", false);
+                        $("#email-mailing").val('');
+                    }
+                    else {
+                        show_message("Помилка даних", data.message, true);
+                    }
+                },
+                error: function (data) {
+                    show_message("Помилка серверу", data.responseText, true);
+                }
+            });
+        }
+    </script>
+</div>

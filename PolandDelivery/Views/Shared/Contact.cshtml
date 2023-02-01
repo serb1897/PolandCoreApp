@@ -1,0 +1,91 @@
+﻿<script src="https://unpkg.com/imask"></script>
+
+<!-- <section> -->
+<div class="c-container">
+    <div class="contact">
+        <div class="contact-info">
+            <h2 class="section-title">Зв'язатися з нами</h2>
+            <p>Залишіть заявку, щоб замовити перевезення або дізнатися більше про послуги компанії</p>
+        </div>
+
+        <div action="" class="contact-form">
+            <div class="contact-form__line">
+                <div class="contact-form__item label-rotate">
+                    <input class="label-rotate__input" id="name-callback" name="name-callback" type="text" placeholder="Ваше ім’я">
+                    <label for="name" class="label-rotate__label">Ваше ім’я</label>
+                </div>
+            </div>
+
+            <div class="contact-form__line">
+                <div class="contact-form__item--short label-rotate">
+                    <input class="label-rotate__input" id="tel-number-callback" name="tel-number-callback" type="text" placeholder="Номер телефону">
+                    <label for="tel-number" class="label-rotate__label">Номер телефону</label>
+                </div>
+
+                <div class="contact-form__item--short label-rotate">
+                    <input class="label-rotate__input" id="email-callback" name="email-callback" type="text" placeholder="E-mail">
+                    <label for="Email" class="label-rotate__label">E-mail</label>
+                </div>
+            </div>
+
+            <div class="contact-form__line">
+                <div class="contact-form__item label-rotate">
+                    <textarea class="label-rotate__input" placeholder="Ваше повідомлення" id="message-callback" name="message-callback" required></textarea>
+                    <label for="message" class="label-rotate__label">Ваше повідомлення</label>
+                </div>
+            </div>
+
+            <p class="contact-form__notice">Надсилаючи повідомлення ви даєте згоду на <a href="#" target="_blank">обробку песональних данних.</a></p>
+
+            <button class="main-btn popup-default_open" onclick="SendCallbackRequest()">Надіслати</button>
+        </div>
+    </div>
+</div>
+<!-- </section> -->
+
+<script type="text/javascript">
+
+    var phoneMask = IMask(
+        document.getElementById('tel-number-callback'), {
+        mask: '+{38}(000)000-00-00'
+    });
+
+    function SendCallbackRequest() {
+        var _name = $("#name-callback").val();
+        var _phone = $("#tel-number-callback").val();
+        var _email = $("#email-callback").val();
+        var _message = $("#message-callback").val();
+
+        var data = {
+            name: _name,
+            email: _email,
+            phone: _phone,
+            message: _message
+        };
+
+        var url = '@Url.Action("SendCallbackRequest", "UserForms")';
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                if (data.state == true) {
+                    show_message("Ваша заявка успішно відправлена!", "Наш менеджер зв’яжеться з Вами найближчим часом.", false);
+                    $("#name-callback").val('');
+                    $("#tel-number-callback").val('');
+                    $("#email-callback").val('');
+                    $("#message-callback").val('');
+                }
+                else {
+                    show_message("Помилка даних", data.message, true);
+                }
+            },
+            error: function (data) {
+                show_message("Помилка серверу", data.responseText, true);
+            }
+        });
+    }
+
+</script>
